@@ -1,0 +1,31 @@
+# Binary
+amartha-loan-engine
+*.exe
+
+# Database files 
+*.db
+
+# Go build artifacts
+vendor/
+dist/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.local
+
+# Temporary files
+tmp/
+temp/
