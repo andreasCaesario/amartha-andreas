@@ -49,6 +49,18 @@ type Investment struct {
 
 // Business rules and validation methods
 
+// ValidateBorrowerIDNumber validates the borrower ID format and length
+func ValidateBorrowerIDNumber(borrowerID string) error {
+	if len(borrowerID) == 0 {
+		return errors.New("borrower ID number cannot be empty")
+	}
+	if len(borrowerID) > 16 {
+		return errors.New("borrower ID number cannot exceed 16 characters")
+	}
+	// Additional validation can be added here (e.g., numeric only, specific format)
+	return nil
+}
+
 // CanBeApproved checks if loan can be approved
 func (l *Loan) CanBeApproved() error {
 	if l.State != StateProposed {

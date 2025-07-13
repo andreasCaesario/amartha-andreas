@@ -46,7 +46,7 @@ func (d *Database) createTables() error {
 	loanTable := `
 	CREATE TABLE IF NOT EXISTS loans (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		borrower_id_number TEXT NOT NULL,
+		borrower_id_number VARCHAR(16) NOT NULL,
 		principal_amount REAL NOT NULL,
 		rate REAL NOT NULL,
 		roi REAL NOT NULL,

@@ -75,7 +75,7 @@ The system uses SQLite with two main tables:
 | Field | Type | Description |
 |-------|------|-------------|
 | `id` | INTEGER PRIMARY KEY | Auto-increment loan ID |
-| `borrower_id_number` | TEXT | Borrower identification |
+| `borrower_id_number` | VARCHAR(16) | Borrower identification (max 16 chars) |
 | `principal_amount` | REAL | Loan amount requested |
 | `rate` | REAL | Interest rate for borrower |
 | `roi` | REAL | Return on investment for investors |
