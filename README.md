@@ -1,6 +1,6 @@
 # Amartha - Loan Engine API
 
-A comprehensive loan management system built with **Go**, **Gin Framework**, and **SQLite** using **Clean Architecture** principles. This system manages the complete loan lifecycle from proposal through disbursement with strict state management, business rules validation, email notifications, and file upload capabilities.
+A loan management system built with **Go**, **Gin Framework**, and **SQLite** using **Clean Architecture** principles. This system manages the complete loan lifecycle from proposal through disbursement with strict state management, business rules validation, email notifications, and file upload capabilities.
 
 ## 🚀 Features
 
@@ -138,35 +138,6 @@ amartha-andreas/
         └── loan_repository.go      # Data access implementation
 ```
 
-## 🧪 Development & Testing
-
-### Build for Production
-```bash
-go build -o amartha-loan-engine .
-```
-
-### Run Tests
-```bash
-go test ./...
-```
-
-### API Testing with curl
-```bash
-# Health check
-curl http://localhost:8080/api/loans
-
-# Create a loan
-curl -X POST http://localhost:8080/api/loans \
-  -H "Content-Type: application/json" \
-  -d '{
-    "borrower_id_number": "ID123456789",
-    "principal_amount": 50000000,
-    "rate": 12.5,
-    "roi": 15.0,
-    "agreement_letter_link": "https://example.com/agreement.pdf"
-  }'
-```
-
 ## 🌐 API Documentation
 
 ### Base URL
@@ -193,7 +164,7 @@ Creates a new loan in "proposed" state.
 **Response:**
 ```json
 {
-  "id": "loan-uuid",
+  "id": 0,
   "borrower_id_number": "1234567890",
   "principal_amount": 50000000,
   "rate": 12.5,
@@ -245,21 +216,21 @@ Approves a loan (proposed → approved). Uses multipart form data for file uploa
 **Form Data:**
 - `proof_picture`: Image file (JPG/JPEG/PNG, max 5MB)
 - `employee_id`: Employee ID string
-- `approval_date`: RFC3339 formatted date (e.g., "2023-12-25T10:30:00Z")
+- `approval_date`: YYYY-MM-DD HH:MM:SS format (e.g., 2023-12-25 10:30:00)
 
 **Example using curl:**
 ```bash
 curl -X POST http://localhost:8080/api/loans/1/approve \
   -F "proof_picture=@/path/to/proof.jpg" \
   -F "employee_id=EMP001" \
-  -F "approval_date=2023-12-25T10:30:00Z"
+  -F "approval_date=2023-12-25 10:30:00"
 ```
 
 **Business Rules:**
 - Can only approve loans in "proposed" state
 - Cannot revert back to proposed after approval
 - Proof picture file is required and validated
-- Approval date must be in RFC3339 format
+- Approval date must be in YYYY-MM-DD HH:MM:SS format
 
 #### 5. Invest in Loan
 **POST** `/loans/:id/invest`
@@ -287,20 +258,20 @@ Disburses a fully invested loan to borrower. Uses multipart form data for file u
 **Form Data:**
 - `signed_agreement_doc`: Document file (PDF/JPG/JPEG, max 5MB)
 - `employee_id`: Employee ID string  
-- `disbursement_date`: RFC3339 formatted date (e.g., "2023-12-26T14:00:00Z")
+- `disbursement_date`: YYYY-MM-DD HH:MM:SS format (e.g., 2023-12-25 10:30:00)
 
 **Example using curl:**
 ```bash
 curl -X POST http://localhost:8080/api/loans/1/disburse \
   -F "signed_agreement_doc=@/path/to/signed_agreement.pdf" \
   -F "employee_id=EMP002" \
-  -F "disbursement_date=2023-12-26T14:00:00Z"
+  -F "disbursement_date=2023-12-26 14:00:00"
 ```
 
 **Business Rules:**
 - Can only disburse loans in "invested" state
 - Signed agreement document file is required and validated
-- Disbursement date must be in RFC3339 format
+- Disbursement date must be in YYYY-MM-DD HH:MM:SS format
 - Records disbursement employee and timestamp
 
 ---
